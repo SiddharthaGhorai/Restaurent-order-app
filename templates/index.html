@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SID's Restaurant</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body class="bg-light text-dark">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-danger mb-4">
+    <div class="container">
+      <a class="navbar-brand" href="/">SID's Restaurant</a>
+      <div class="ms-auto">
+        <a href="/admin" class="btn btn-outline-light">Admin Dashboard</a>
+      </div>
+    </div>
+  </nav>
+  
+  <div class="container py-4">
+    <div class="row mb-4">
+      <div class="col-md-6">
+        <div class="input-group">
+          <input type="number" id="tableNumber" class="form-control" placeholder="Enter Table Number" min="1">
+          <button id="confirmTable" class="btn btn-danger">Confirm Table</button>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="input-group">
+          <input type="text" id="searchBox" class="form-control" placeholder="Search menu...">
+          <span class="input-group-text"><i class="bi bi-search"></i></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="mb-4">
+      <div class="btn-group" role="group">
+        <button class="btn btn-outline-danger me-2 category-btn active" data-category="All">All</button>
+        <button class="btn btn-outline-danger me-2 category-btn" data-category="Starters">Starters</button>
+        <button class="btn btn-outline-danger me-2 category-btn" data-category="Main">Main</button>
+        <button class="btn btn-outline-danger me-2 category-btn" data-category="Drinks">Drinks</button>
+        <button class="btn btn-outline-danger me-2 category-btn" data-category="Desserts">Desserts</button>
+      </div>
+    </div>
+
+    <div id="menuContainer" class="row"></div>
+    
+    <div class="mt-5 p-4 bg-white rounded shadow-sm">
+      <h3 class="text-danger mb-3">🛒 Your Cart</h3>
+      <div id="cartItems" class="mb-3"></div>
+      <div class="d-flex justify-content-between align-items-center mt-3">
+        <h4>Total: $<span id="totalPrice">0.00</span></h4>
+        <button class="btn btn-success" id="checkout">Checkout</button>
+      </div>
+    </div>
+  </div>
+
+<script id="menu-data" type="application/json">
+  {{ menu_items | tojson }}
+</script>
+<script>
+  const MENU_DATA = JSON.parse(
+    document.getElementById("menu-data").textContent
+  );
+</script>
+  <script src="/static/script.js"></script>
+</body>
+</html>

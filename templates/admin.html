@@ -1,0 +1,111 @@
+<!-- templates/admin.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Dashboard</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+  <style>
+    body {
+      background-color: #f8f9fa;
+      color: #333;
+      padding: 20px;
+    }
+    .card {
+      margin-bottom: 20px;
+      border: none;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+    .card-header {
+      background-color: #dc3545;
+      color: white;
+      font-weight: bold;
+    }
+    .status-select {
+      width: auto;
+    }
+    .badge {
+      font-size: 0.9em;
+    }
+    .table-total {
+      font-weight: bold;
+      color: #dc3545;
+    }
+    .no-orders {
+      text-align: center;
+      padding: 50px;
+      background-color: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+  </style>
+</head>
+<body>
+  <div class="mt-4 text-center">
+    <a href="/" class="btn btn-primary">
+      <i class="bi bi-house-door"></i> Back to Dashboard
+    </a>
+  </div>
+
+  <script>
+    // Add this function to handle back to dashboard button
+    document.addEventListener('DOMContentLoaded', function() {
+      const backButton = document.querySelector('a[href="/"]');
+      if (backButton) {
+        backButton.addEventListener('click', function(e) {
+          e.preventDefault();
+          window.location.href = '/';
+        });
+      }
+    });
+  </script>
+
+ <div class="container">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h2 class="mb-0"><i class="bi bi-speedometer2 me-2"></i>Admin Dashboard</h2>
+      <div class="text-end">
+        <h4>Total Sales: $<span id="totalSales">{{ '%.2f' % total_sales }}</span></h4>
+      </div>
+    </div>
+    
+    {% if orders %}
+      {% for table, items in orders.items() %}
+        <div class="card">
+          <div class="card-header bg-dark text-white">
+            Table {{ table }}
+          </div>
+          <ul class="list-group list-group-flush">
+            {% for item in items %}
+              <li class="list-group-item d-flex justify-content-between align-items-center">
+                {{ item.name }} x{{ item.qty }} - ${{ '%.2f' % (item.price * item.qty) }}
+                 <select class="form-select w-auto"
+                 onchange="updateStatus('{{ table }}', '{{ item.id }}', this.value)">
+                   <option value="Pending" {% if item.status == 'Pending' %}selected{% endif %}>Pending</option>
+                   <option value="Preparing" {% if item.status == 'Preparing' %}selected{% endif %}>Preparing</option>
+                   <option value="Served" {% if item.status == 'Served' %}selected{% endif %}>Served</option>
+                 </select>
+              </li>
+            {% endfor %}
+          </ul>
+        </div>
+      {% endfor %}
+    {% else %}
+      <div class="alert alert-info">
+        <i class="bi bi-info-circle me-2"></i>
+        No active orders at the moment.
+      </div>
+    {% endif %}
+  </div>
+  
+  <script>
+    function updateStatus(table, itemId, status) {
+      fetch('/update_status', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({table_number: table, item_id: itemId, status: status})
+      });
+    }
+  </script>
+</body>
+</html>

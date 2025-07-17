@@ -1,0 +1,127 @@
+:root {
+  --primary-color: #dc3545;
+  --secondary-color: #f8f9fa;
+  --accent-color: #ffc107;
+  --text-color: #212529;
+  --card-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+body {
+  background-color: var(--secondary-color);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: var(--text-color);
+}
+
+.navbar {
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.card {
+  transition: transform 0.3s, box-shadow 0.3s;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: var(--card-shadow);
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+}
+
+#cartItems > div {
+  padding: 10px 0;
+  border-bottom: 1px solid #e9ecef;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.category-btn {
+  border-radius: 20px;
+  padding: 8px 16px;
+  margin: 0 5px;
+  transition: all 0.3s;
+}
+
+.category-btn:hover {
+  transform: scale(1.05);
+}
+
+.category-btn.active {
+  background-color: var(--primary-color);
+  color: white;
+  border-color: var(--primary-color);
+}
+
+.btn-danger {
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+}
+
+.btn-warning {
+  background-color: var(--accent-color);
+  border-color: var(--accent-color);
+  color: var(--text-color);
+}
+
+.btn-success {
+  background-color: #28a745;
+  border-color: #28a745;
+}
+
+.menu-item-card {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.menu-item-card .card-img-top {
+  height: 180px;
+  object-fit: cover;
+}
+
+.menu-item-card .card-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.menu-item-card .quantity {
+  margin-bottom: 10px;
+}
+
+.menu-item-card .btn-warning {
+  margin-top: auto;
+}
+
+#searchBox {
+  border-radius: 20px;
+  padding-left: 40px;
+}
+
+#searchBox:focus {
+  box-shadow: 0 0 0 0.25rem rgba(220, 53, 69, 0.25);
+}
+
+.cart-item {
+  padding: 12px;
+  border-radius: 8px;
+  background-color: white;
+  margin-bottom: 10px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.cart-item .remove-btn {
+  color: var(--primary-color);
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .category-btn {
+    margin-bottom: 10px;
+  }
+  
+  .menu-item-card {
+    margin-bottom: 20px;
+  }
+}
